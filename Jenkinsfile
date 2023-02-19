@@ -4,13 +4,15 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'g++ -o hello task5.cpp'
+                sh 'g++ task5.cpp'
+                echo 'build stage successful'
             }
         }
 
         stage('Test') {
             steps {
-                sh './hello'
+                sh './a.out'
+                echo 'test stage successful'
             }
         }
 
@@ -22,12 +24,9 @@ pipeline {
     }
 
     post {
-        always {
-            script {
-                if (currentBuild.result == 'FAILURE') {
+        failure {
                     echo 'pipeline failed'
                 }
             }
         }
-}
-}
+
